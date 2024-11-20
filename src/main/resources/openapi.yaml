@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  description: API for handling customer orders and transactions
+  title: Order Service API
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /orders:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Order"
+                type: array
+          description: A list of orders
+      summary: List all orders
+      x-accepts:
+      - application/json
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+      responses:
+        "201":
+          description: Order created
+      summary: Create a new order
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /orders/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Order deleted
+      summary: Delete an order
+      x-accepts:
+      - application/json
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+          description: Order details
+      summary: Get an order by ID
+      x-accepts:
+      - application/json
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+      responses:
+        "200":
+          description: Order updated
+      summary: Update an order
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    Order:
+      example:
+        order_date: 2000-01-23T04:56:07.000+00:00
+        total_amount: 1.4658129805029452
+        id: 0
+        customer_id: 6
+        status: status
+      properties:
+        id:
+          type: integer
+        customer_id:
+          type: integer
+        order_date:
+          format: date-time
+          type: string
+        status:
+          type: string
+        total_amount:
+          format: double
+          type: number
+      type: object
