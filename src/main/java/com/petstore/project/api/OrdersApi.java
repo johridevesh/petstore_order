@@ -6,6 +6,7 @@
 package com.petstore.project.api;
 
 import com.petstore.project.model.Order;
+import com.petstore.project.model.OrderResponse;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -51,7 +52,7 @@ public interface OrdersApi {
         summary = "List all orders",
         responses = {
             @ApiResponse(responseCode = "200", description = "A list of orders", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Order.class)))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OrderResponse.class)))
             })
         }
     )
@@ -61,7 +62,7 @@ public interface OrdersApi {
         produces = { "application/json" }
     )
     
-    default ResponseEntity<List<Order>> ordersGet(
+    default ResponseEntity<List<OrderResponse>> ordersGet(
         
     ) throws Exception {
         getRequest().ifPresent(request -> {
@@ -115,7 +116,7 @@ public interface OrdersApi {
         summary = "Get an order by ID",
         responses = {
             @ApiResponse(responseCode = "200", description = "Order details", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OrderResponse.class))
             })
         }
     )
@@ -125,7 +126,7 @@ public interface OrdersApi {
         produces = { "application/json" }
     )
     
-    default ResponseEntity<Order> ordersIdGet(
+    default ResponseEntity<OrderResponse> ordersIdGet(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) throws Exception {
         getRequest().ifPresent(request -> {
